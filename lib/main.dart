@@ -2,6 +2,7 @@ import 'package:d2ynews/models/article.dart';
 import 'package:d2ynews/screen/article_webview.dart';
 import 'package:d2ynews/screen/detail_screen.dart';
 import 'package:d2ynews/screen/news_screen.dart';
+import 'package:d2ynews/styles/style.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -17,7 +18,12 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'D2YNEWS',
       theme: ThemeData(
-          primarySwatch: Colors.red,
+          colorScheme: Theme.of(context).colorScheme.copyWith(
+              primary: primaryColor,
+              onPrimary: Colors.black,
+              secondary: secondaryColor),
+          textTheme: myTextTheme,
+          appBarTheme: AppBarTheme(elevation: 0),
           visualDensity: VisualDensity.adaptivePlatformDensity),
       initialRoute: NewsScreen.routeName,
       routes: {
