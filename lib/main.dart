@@ -1,8 +1,9 @@
 import 'package:d2ynews/models/article.dart';
 import 'package:d2ynews/screen/article_webview.dart';
 import 'package:d2ynews/screen/detail_screen.dart';
-import 'package:d2ynews/screen/news_screen.dart';
-import 'package:d2ynews/styles/style.dart';
+import 'package:d2ynews/screen/article_list_page.dart';
+import 'package:d2ynews/screen/home_screen.dart';
+import 'package:d2ynews/common/style.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -24,10 +25,14 @@ class MyApp extends StatelessWidget {
               secondary: secondaryColor),
           textTheme: myTextTheme,
           appBarTheme: AppBarTheme(elevation: 0),
+          bottomNavigationBarTheme: BottomNavigationBarThemeData(
+            selectedItemColor: secondaryColor,
+            unselectedItemColor: Colors.grey,
+          ),
           visualDensity: VisualDensity.adaptivePlatformDensity),
-      initialRoute: NewsScreen.routeName,
+      initialRoute: HomeScreen.routeName,
       routes: {
-        NewsScreen.routeName: (context) => NewsScreen(),
+        HomeScreen.routeName: (context) => HomeScreen(),
         DetailScreen.routeName: (context) => DetailScreen(
             article: ModalRoute.of(context)?.settings.arguments as Article),
         ArticleWebView.routeName: (context) => ArticleWebView(
