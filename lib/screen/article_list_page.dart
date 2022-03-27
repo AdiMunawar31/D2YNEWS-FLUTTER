@@ -15,14 +15,6 @@ class ArticleListPage extends StatefulWidget {
 }
 
 class _ArticleListPageState extends State<ArticleListPage> {
-  late Future<ArticlesResult> _article;
-
-  @override
-  void initState() {
-    super.initState();
-    _article = ApiService().topHeadlines();
-  }
-
   Widget _buildList(BuildContext context) {
     return Consumer<NewsProvider>(
       builder: (context, state, _) {
