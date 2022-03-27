@@ -1,9 +1,11 @@
 import 'package:d2ynews/data/api/api_service.dart';
 import 'package:d2ynews/data/models/article.dart';
+import 'package:d2ynews/provider/news_provider.dart';
 import 'package:d2ynews/widgets/card_article.dart';
 import 'package:d2ynews/widgets/platform_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ArticleListPage extends StatefulWidget {
   const ArticleListPage({Key? key}) : super(key: key);
@@ -22,54 +24,29 @@ class _ArticleListPageState extends State<ArticleListPage> {
   }
 
   Widget _buildList(BuildContext context) {
-    return FutureBuilder(
-      future: _article,
-      builder: (context, AsyncSnapshot<ArticlesResult> snapshot) {
-        var state = snapshot.connectionState;
-        if (state != ConnectionState.done) {
+    return Consumer<NewsProvider>(
+      builder: (context, state, _) {
+        if (state.state == ResultState.Loading) {
           return Center(child: CircularProgressIndicator());
+        } else if (state.state == ResultState.HasData) {
+          return ListView.builder(
+            shrinkWrap: true,
+            itemCount: state.result.articles.length,
+            itemBuilder: (context, index) {
+              var article = state.result.articles[index];
+              return CardArticle(article: article);
+            },
+          );
+        } else if (state.state == ResultState.NoData) {
+          return Center(child: Text(state.message));
+        } else if (state.state == ResultState.Error) {
+          return Center(child: Text(state.message));
         } else {
-          if (snapshot.hasData) {
-            return ListView.builder(
-              itemCount: snapshot.data?.articles.length,
-              itemBuilder: (context, index) {
-                var article = snapshot.data?.articles[index];
-                return CardArticle(article: article!);
-              },
-            );
-          } else if (snapshot.hasError) {
-            return Center(child: Text(snapshot.error.toString()));
-          } else {
-            return Text('');
-          }
+          return Center(child: Text(''));
         }
       },
     );
   }
-
-  // Widget _buildArticleItem(BuildContext context, Article article) {
-  //   return Material(
-  //     child: ListTile(
-  //       contentPadding:
-  //           const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-  //       leading: Hero(
-  //         tag: article.urlToImage,
-  //         child: Image.network(
-  //           article.urlToImage,
-  //           width: 100,
-  //         ),
-  //       ),
-  //       title: Text(
-  //         article.title,
-  //       ),
-  //       subtitle: Text(article.author),
-  //       onTap: () {
-  //         Navigator.pushNamed(context, DetailScreen.routeName,
-  //             arguments: article);
-  //       },
-  //     ),
-  //   );
-  // }
 
   Widget _buildAndroid(BuildContext context) {
     return Scaffold(
