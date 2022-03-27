@@ -1,13 +1,12 @@
 import 'package:d2ynews/common/style.dart';
 import 'package:d2ynews/screen/detail_screen.dart';
 import 'package:flutter/material.dart';
-
 import '../data/models/article.dart';
 
 class CardArticle extends StatelessWidget {
   final Article article;
 
-  const CardArticle({required this.article});
+  const CardArticle({Key? key, required this.article}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

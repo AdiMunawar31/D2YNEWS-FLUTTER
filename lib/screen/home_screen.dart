@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:d2ynews/data/api/api_service.dart';
 import 'package:d2ynews/provider/news_provider.dart';
 import 'package:d2ynews/screen/article_list_page.dart';

@@ -1,5 +1,3 @@
-import 'package:d2ynews/data/api/api_service.dart';
-import 'package:d2ynews/data/models/article.dart';
 import 'package:d2ynews/provider/news_provider.dart';
 import 'package:d2ynews/widgets/card_article.dart';
 import 'package:d2ynews/widgets/platform_widget.dart';
