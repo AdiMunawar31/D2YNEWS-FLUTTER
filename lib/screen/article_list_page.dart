@@ -7,14 +7,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class ArticleListPage extends StatefulWidget {
+class ArticleListPage extends StatelessWidget {
   const ArticleListPage({Key? key}) : super(key: key);
 
-  @override
-  State<ArticleListPage> createState() => _ArticleListPageState();
-}
-
-class _ArticleListPageState extends State<ArticleListPage> {
   Widget _buildList(BuildContext context) {
     return Consumer<NewsProvider>(
       builder: (context, state, _) {
