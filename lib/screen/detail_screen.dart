@@ -18,9 +18,15 @@ class DetailScreen extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Hero(
-                tag: article.urlToImage!,
-                child: Image.network(article.urlToImage!)),
+            article.urlToImage == null
+                ? SizedBox(
+                    height: 200,
+                    child: Icon(Icons.error),
+                  )
+                : Hero(
+                    tag: article.urlToImage!,
+                    child: Image.network(article.urlToImage!),
+                  ),
             Padding(
               padding: EdgeInsets.all(10),
               child: Column(
