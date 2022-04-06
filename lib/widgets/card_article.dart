@@ -1,5 +1,5 @@
 import 'package:d2ynews/common/style.dart';
-import 'package:d2ynews/screen/detail_screen.dart';
+import 'package:d2ynews/ui/detail_screen.dart';
 import 'package:flutter/material.dart';
 import '../data/models/article.dart';
 

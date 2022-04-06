@@ -1,8 +1,8 @@
 import 'dart:io';
 import 'package:d2ynews/data/api/api_service.dart';
 import 'package:d2ynews/provider/news_provider.dart';
-import 'package:d2ynews/screen/article_list_page.dart';
-import 'package:d2ynews/screen/settings_screen.dart';
+import 'package:d2ynews/ui/article_list_page.dart';
+import 'package:d2ynews/ui/settings_screen.dart';
 import 'package:d2ynews/widgets/platform_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

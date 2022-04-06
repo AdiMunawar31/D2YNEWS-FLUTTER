@@ -1,7 +1,7 @@
 import 'package:d2ynews/data/models/article.dart';
-import 'package:d2ynews/screen/article_webview.dart';
-import 'package:d2ynews/screen/detail_screen.dart';
-import 'package:d2ynews/screen/home_screen.dart';
+import 'package:d2ynews/ui/article_webview.dart';
+import 'package:d2ynews/ui/detail_screen.dart';
+import 'package:d2ynews/ui/home_screen.dart';
 import 'package:d2ynews/common/style.dart';
 import 'package:flutter/material.dart';
 

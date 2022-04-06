@@ -1,5 +1,5 @@
 import 'package:d2ynews/data/models/article.dart';
-import 'package:d2ynews/screen/article_webview.dart';
+import 'package:d2ynews/ui/article_webview.dart';
 import 'package:flutter/material.dart';
 
 class DetailScreen extends StatelessWidget {
