@@ -1,3 +1,4 @@
+import 'package:d2ynews/common/navigation.dart';
 import 'package:flutter/material.dart';
 
 class CustomScaffold extends StatelessWidget {
@@ -29,7 +30,7 @@ Widget _buildShortAppBar(BuildContext context) {
         IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {
-            Navigator.pop(context);
+            Navigation.back();
           },
         ),
         Padding(

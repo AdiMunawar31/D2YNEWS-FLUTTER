@@ -1,8 +1,11 @@
 import 'dart:io';
 import 'package:d2ynews/data/api/api_service.dart';
 import 'package:d2ynews/provider/news_provider.dart';
+import 'package:d2ynews/provider/scheduling_provider.dart';
 import 'package:d2ynews/ui/article_list_page.dart';
+import 'package:d2ynews/ui/detail_screen.dart';
 import 'package:d2ynews/ui/settings_screen.dart';
+import 'package:d2ynews/utils/notification_helper.dart';
 import 'package:d2ynews/widgets/platform_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -18,6 +21,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final NotificationHelper _notificationHelper = NotificationHelper();
   int _bottomNavIndex = 0;
   static const String _headlineText = 'Headline';
 
@@ -25,8 +29,24 @@ class _HomeScreenState extends State<HomeScreen> {
     ChangeNotifierProvider<NewsProvider>(
         create: (_) => NewsProvider(apiService: ApiService()),
         child: ArticleListPage()),
-    SettingsPage(),
+    ChangeNotifierProvider<SchedulingProvider>(
+      create: (_) => SchedulingProvider(),
+      child: SettingsPage(),
+    ),
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    _notificationHelper
+        .configureSelectNotificationSubject(DetailScreen.routeName);
+  }
+
+  @override
+  void dispose() {
+    selectNotificationSubject.close();
+    super.dispose();
+  }
 
   final List<BottomNavigationBarItem> _bottomNavBarItems = [
     BottomNavigationBarItem(

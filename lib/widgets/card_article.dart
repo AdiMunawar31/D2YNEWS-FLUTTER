@@ -1,3 +1,4 @@
+import 'package:d2ynews/common/navigation.dart';
 import 'package:d2ynews/common/style.dart';
 import 'package:d2ynews/ui/detail_screen.dart';
 import 'package:flutter/material.dart';
@@ -26,11 +27,7 @@ class CardArticle extends StatelessWidget {
           article.title,
         ),
         subtitle: Text(article.author!),
-        onTap: () => Navigator.pushNamed(
-          context,
-          DetailScreen.routeName,
-          arguments: article,
-        ),
+        onTap: () => Navigation.intentWithData(DetailScreen.routeName, article),
       ),
     );
   }

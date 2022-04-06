@@ -1,15 +1,14 @@
 import 'dart:isolate';
-
 import 'dart:ui';
-
 import 'package:d2ynews/data/api/api_service.dart';
+import 'package:d2ynews/main.dart';
 import 'package:d2ynews/utils/notification_helper.dart';
 
 final ReceivePort port = ReceivePort();
 
 class BackgroundService {
   static BackgroundService? _instance;
-  static String _isolateName = 'isolate';
+  static const String _isolateName = 'isolate';
   static SendPort? _uiSendPort;
 
   BackgroundService._internal() {

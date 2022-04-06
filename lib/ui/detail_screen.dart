@@ -1,3 +1,4 @@
+import 'package:d2ynews/common/navigation.dart';
 import 'package:d2ynews/data/models/article.dart';
 import 'package:d2ynews/ui/article_webview.dart';
 import 'package:flutter/material.dart';
@@ -60,8 +61,8 @@ class DetailScreen extends StatelessWidget {
                   ElevatedButton(
                     child: Text('Read more'),
                     onPressed: () {
-                      Navigator.pushNamed(context, ArticleWebView.routeName,
-                          arguments: article.url);
+                      Navigation.intentWithData(
+                          ArticleWebView.routeName, article.url);
                     },
                   ),
                 ],
