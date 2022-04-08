@@ -1,5 +1,7 @@
+import 'package:d2ynews/common/style.dart';
 import 'package:d2ynews/data/preferences/preferences_helper.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 
 class PreferencesProvider extends ChangeNotifier {
   late PreferencesHelper preferencesHelper;
@@ -14,6 +16,8 @@ class PreferencesProvider extends ChangeNotifier {
 
   bool _isDailyNewsActive = false;
   bool get isDailyNewsActive => _isDailyNewsActive;
+
+  ThemeData get themeData => _isDarkTheme ? darkTheme : lightTheme;
 
   void _getTheme() async {
     _isDarkTheme = await preferencesHelper.isDarkTheme;

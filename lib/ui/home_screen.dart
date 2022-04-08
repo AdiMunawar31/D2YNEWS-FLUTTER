@@ -26,13 +26,9 @@ class _HomeScreenState extends State<HomeScreen> {
   static const String _headlineText = 'Headline';
 
   final List<Widget> _listWidget = [
-    ChangeNotifierProvider<NewsProvider>(
-        create: (_) => NewsProvider(apiService: ApiService()),
-        child: ArticleListPage()),
-    ChangeNotifierProvider<SchedulingProvider>(
-      create: (_) => SchedulingProvider(),
-      child: SettingsPage(),
-    ),
+    ArticleListPage(),
+    // BookmarksPage(),
+    SettingsPage(),
   ];
 
   @override

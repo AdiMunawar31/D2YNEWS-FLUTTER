@@ -2,15 +2,23 @@ import 'dart:io';
 
 import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
 import 'package:d2ynews/common/navigation.dart';
+import 'package:d2ynews/data/api/api_service.dart';
 import 'package:d2ynews/data/models/article.dart';
+import 'package:d2ynews/data/preferences/preferences_helper.dart';
+import 'package:d2ynews/provider/news_provider.dart';
+import 'package:d2ynews/provider/preferences_provider.dart';
+import 'package:d2ynews/provider/scheduling_provider.dart';
 import 'package:d2ynews/ui/article_webview.dart';
 import 'package:d2ynews/ui/detail_screen.dart';
 import 'package:d2ynews/ui/home_screen.dart';
 import 'package:d2ynews/common/style.dart';
 import 'package:d2ynews/utils/background_service.dart';
 import 'package:d2ynews/utils/notification_helper.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
@@ -28,7 +36,7 @@ Future<void> main() async {
 
   await _notificationHelper.initNotifications(flutterLocalNotificationsPlugin);
 
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -36,30 +44,54 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'D2YNEWS',
-      theme: ThemeData(
-          colorScheme: Theme.of(context).colorScheme.copyWith(
-              primary: primaryColor,
-              onPrimary: Colors.black,
-              secondary: secondaryColor),
-          textTheme: myTextTheme,
-          appBarTheme: AppBarTheme(elevation: 0),
-          bottomNavigationBarTheme: BottomNavigationBarThemeData(
-            selectedItemColor: secondaryColor,
-            unselectedItemColor: Colors.grey,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (_) => NewsProvider(apiService: ApiService()),
+        ),
+        ChangeNotifierProvider(create: (_) => SchedulingProvider()),
+        ChangeNotifierProvider(
+          create: (_) => PreferencesProvider(
+            preferencesHelper: PreferencesHelper(
+              sharedPreferences: SharedPreferences.getInstance(),
+            ),
           ),
-          visualDensity: VisualDensity.adaptivePlatformDensity),
-      navigatorKey: navigatorKey,
-      initialRoute: HomeScreen.routeName,
-      routes: {
-        HomeScreen.routeName: (context) => HomeScreen(),
-        DetailScreen.routeName: (context) => DetailScreen(
-            article: ModalRoute.of(context)?.settings.arguments as Article),
-        ArticleWebView.routeName: (context) => ArticleWebView(
-            url: ModalRoute.of(context)?.settings.arguments as String)
-      },
+        ),
+        // ChangeNotifierProvider(
+        //   create: (_) => DatabaseProvider(databaseHelper: DatabaseHelper()),
+        // ),
+      ],
+      child: Consumer<PreferencesProvider>(
+        builder: (context, provider, child) {
+          return MaterialApp(
+            title: 'News App',
+            theme: provider.themeData,
+            builder: (context, child) {
+              return CupertinoTheme(
+                data: CupertinoThemeData(
+                  brightness:
+                      provider.isDarkTheme ? Brightness.dark : Brightness.light,
+                ),
+                child: Material(
+                  child: child,
+                ),
+              );
+            },
+            navigatorKey: navigatorKey,
+            initialRoute: HomeScreen.routeName,
+            routes: {
+              HomeScreen.routeName: (context) => HomeScreen(),
+              DetailScreen.routeName: (context) => DetailScreen(
+                    article:
+                        ModalRoute.of(context)?.settings.arguments as Article,
+                  ),
+              ArticleWebView.routeName: (context) => ArticleWebView(
+                    url: ModalRoute.of(context)?.settings.arguments as String,
+                  ),
+            },
+          );
+        },
+      ),
     );
   }
 }

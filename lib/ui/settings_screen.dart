@@ -1,10 +1,10 @@
 import 'dart:io';
 
+import 'package:d2ynews/provider/preferences_provider.dart';
 import 'package:d2ynews/provider/scheduling_provider.dart';
 import 'package:d2ynews/widgets/custom_dialog.dart';
 import 'package:d2ynews/widgets/platform_widget.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -32,36 +32,44 @@ class SettingsPage extends StatelessWidget {
   }
 
   Widget _buildList(BuildContext context) {
-    return ListView(
-      children: [
-        Material(
-          child: ListTile(
-            title: Text('Dark Theme'),
-            trailing: Switch.adaptive(
-              value: false,
-              onChanged: (value) => customDialog(context),
+    return Consumer<PreferencesProvider>(
+      builder: (context, provider, child) {
+        return ListView(
+          children: [
+            Material(
+              child: ListTile(
+                title: Text('Dark Theme'),
+                trailing: Switch.adaptive(
+                  value: provider.isDarkTheme,
+                  onChanged: (value) {
+                    provider.enableDarkTheme(value);
+                  },
+                ),
+              ),
             ),
-          ),
-        ),
-        Material(
-          child: ListTile(
-            title: Text('Scheduling News'),
-            trailing: Consumer<SchedulingProvider>(
-              builder: (context, scheduled, _) {
-                return Switch.adaptive(
-                    value: scheduled.isSchedule,
-                    onChanged: (value) {
-                      if (Platform.isIOS) {
-                        customDialog(context);
-                      } else {
-                        scheduled.scheduleNews(value);
-                      }
-                    });
-              },
+            Material(
+              child: ListTile(
+                title: Text('Scheduling News'),
+                trailing: Consumer<SchedulingProvider>(
+                  builder: (context, scheduled, _) {
+                    return Switch.adaptive(
+                      value: provider.isDailyNewsActive,
+                      onChanged: (value) async {
+                        if (Platform.isIOS) {
+                          customDialog(context);
+                        } else {
+                          scheduled.scheduleNews(value);
+                          provider.enableDailyNews(value);
+                        }
+                      },
+                    );
+                  },
+                ),
+              ),
             ),
-          ),
-        )
-      ],
+          ],
+        );
+      },
     );
   }
 
