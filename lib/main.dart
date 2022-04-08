@@ -3,8 +3,10 @@ import 'dart:io';
 import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
 import 'package:d2ynews/common/navigation.dart';
 import 'package:d2ynews/data/api/api_service.dart';
+import 'package:d2ynews/data/db/database_helper.dart';
 import 'package:d2ynews/data/models/article.dart';
 import 'package:d2ynews/data/preferences/preferences_helper.dart';
+import 'package:d2ynews/provider/database_provider.dart';
 import 'package:d2ynews/provider/news_provider.dart';
 import 'package:d2ynews/provider/preferences_provider.dart';
 import 'package:d2ynews/provider/scheduling_provider.dart';
@@ -57,9 +59,9 @@ class MyApp extends StatelessWidget {
             ),
           ),
         ),
-        // ChangeNotifierProvider(
-        //   create: (_) => DatabaseProvider(databaseHelper: DatabaseHelper()),
-        // ),
+        ChangeNotifierProvider(
+          create: (_) => DatabaseProvider(databaseHelper: DatabaseHelper()),
+        ),
       ],
       child: Consumer<PreferencesProvider>(
         builder: (context, provider, child) {

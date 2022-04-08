@@ -3,6 +3,7 @@ import 'package:d2ynews/data/api/api_service.dart';
 import 'package:d2ynews/provider/news_provider.dart';
 import 'package:d2ynews/provider/scheduling_provider.dart';
 import 'package:d2ynews/ui/article_list_page.dart';
+import 'package:d2ynews/ui/bookmark_page.dart';
 import 'package:d2ynews/ui/detail_screen.dart';
 import 'package:d2ynews/ui/settings_screen.dart';
 import 'package:d2ynews/utils/notification_helper.dart';
@@ -27,7 +28,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   final List<Widget> _listWidget = [
     ArticleListPage(),
-    // BookmarksPage(),
+    BookmarksPage(),
     SettingsPage(),
   ];
 
@@ -48,6 +49,12 @@ class _HomeScreenState extends State<HomeScreen> {
     BottomNavigationBarItem(
       icon: Icon(Platform.isIOS ? CupertinoIcons.news : Icons.public),
       label: _headlineText,
+    ),
+    BottomNavigationBarItem(
+      icon: Icon(Platform.isIOS
+          ? CupertinoIcons.bookmark
+          : Icons.collections_bookmark),
+      label: BookmarksPage.bookmarksTitle,
     ),
     BottomNavigationBarItem(
       icon: Icon(Platform.isIOS ? CupertinoIcons.settings : Icons.settings),
