@@ -1,4 +1,5 @@
 import 'package:d2ynews/provider/news_provider.dart';
+import 'package:d2ynews/utils/result_state.dart';
 import 'package:d2ynews/widgets/card_article.dart';
 import 'package:d2ynews/widgets/platform_widget.dart';
 import 'package:flutter/cupertino.dart';

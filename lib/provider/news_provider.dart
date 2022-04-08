@@ -1,8 +1,7 @@
 import 'package:d2ynews/data/api/api_service.dart';
 import 'package:d2ynews/data/models/article.dart';
+import 'package:d2ynews/utils/result_state.dart';
 import 'package:flutter/cupertino.dart';
-
-enum ResultState { Loading, NoData, HasData, Error }
 
 class NewsProvider extends ChangeNotifier {
   final ApiService apiService;
